@@ -15,6 +15,18 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => res.send("Books API is running!")) 
+app.get("/api/books", (req, res) => res.json(books));
+app.get("/api/books/:id", (req, res) => {
+   const book = books.find((book) => {
+     return book.id === (Number(req.params.id))
+   }) 
+   if(book){
+     res.json(book)
+   }
+   else {
+     res.status(404).send('Book Not Found!!!')
+   }
 
+})
 app.listen(8080, () => console.log("Server running on port 8080"));
 
